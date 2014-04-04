@@ -1,6 +1,6 @@
 Name:           jdns
 Version:        2.0.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A simple DNS queries library
 
 License:        MIT
@@ -11,10 +11,6 @@ BuildRequires:  qt4-devel
 BuildRequires:  cmake
 Obsoletes:      qjdns < 2.0.0
 Obsoletes:      qjdns-devel < 2.0.0
-
-# Avoid qt4 dependencies in jdns package
-%global __requires_exclude_from ^%{_libdir}/libqjdns.so.*$
-%global __requires_exclude_from ^%{_bindir}/jdns$
 
 %description
 JDNS is a simple DNS implementation that can perform normal DNS
@@ -96,7 +92,6 @@ make %{?_smp_mflags}
 popd
 
 %install
-rm -rf $RPM_BUILD_ROOT
 %make_install -C %{_target_platform}
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
@@ -136,5 +131,9 @@ test "$(pkg-config --modversion qjdns)" = %{version}
 
 
 %changelog
+* Fri Apr  4 2014 Ivan Romanov <drizt@land.ru> - 2.0.0-2
+- dropped __requires_exclude_from hach
+- dropped removing buildroot before installing
+
 * Thu Apr  3 2014 Ivan Romanov <drizt@land.ru> - 2.0.0-1
 - Initial version of package
