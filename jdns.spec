@@ -1,6 +1,6 @@
 Name:           jdns
 Version:        2.0.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        A simple DNS queries library
 
 License:        MIT
@@ -26,7 +26,6 @@ callbacks.
 %package -n     qjdns
 Summary:        Qt-wrapper for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
-Requires:       qt4%{?_isa}
 
 %description -n qjdns
 JDNS is a simple DNS implementation that can perform normal DNS
@@ -42,21 +41,6 @@ callbacks.
 For Qt users there is a wrapper available called QJDns and a very
 high-level wrapper called QJDnsShared (under its original name
 JDnsShared).
-
-%package        bin
-Summary:        Utility for DNS queries
-Requires:       qjdns%{?_isa} = %{version}-%{release}
-
-%description    bin
-JDNS is a simple DNS implementation that can perform normal DNS
-queries of any record type (notably SRV), as well as Multicast DNS
-queries and advertising. Multicast support is based on Jeremie
-Miller's "mdnsd" implementation.
-
-For maximum flexibility, JDNS is written in C with no direct
-dependencies, and is licensed under the MIT license. Your application
-must supply functionality to JDNS, such as UDP sending/receiving, via
-callbacks.
 
 Qt-based command-line tool called ‘jdns’ that can be used to test
 functionality.
@@ -93,7 +77,7 @@ popd
 
 %install
 %make_install -C %{_target_platform}
-find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
+find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 %check
 export PKG_CONFIG_PATH=%{buildroot}%{_qt4_libdir}/pkgconfig:
@@ -110,17 +94,13 @@ test "$(pkg-config --modversion qjdns)" = %{version}
 
 %files
 %doc COPYING README.md
-%{_bindir}/jdns
 %{_libdir}/libjdns.so.*
 
 %files -n qjdns
+%{_bindir}/jdns
 %{_libdir}/libqjdns.so.*
 
-%files bin
-%{_bindir}/jdns
-
 %files devel
-%doc
 %{_includedir}/jdns/
 %{_libdir}/libjdns.so
 %{_libdir}/libqjdns.so
@@ -131,6 +111,12 @@ test "$(pkg-config --modversion qjdns)" = %{version}
 
 
 %changelog
+* Wed Apr  9 2014 Ivan Romanov <drizt@land.ru> - 2.0.0-3
+- removed jdns binary from jdns package
+- dropped reduntant dependencies
+- use only %%{buildroot}
+- merged jdns-bin with qjdns subpackage
+
 * Fri Apr  4 2014 Ivan Romanov <drizt@land.ru> - 2.0.0-2
 - dropped __requires_exclude_from hach
 - dropped removing buildroot before installing
