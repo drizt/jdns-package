@@ -1,6 +1,6 @@
 Name:           jdns
 Version:        2.0.0
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        A simple DNS queries library
 
 License:        MIT
@@ -9,8 +9,8 @@ Source0:        http://delta.affinix.com/download/%{name}-%{version}.tar.bz2
 
 BuildRequires:  qt4-devel
 BuildRequires:  cmake
-Obsoletes:      qjdns < 2.0.0
-Obsoletes:      qjdns-devel < 2.0.0
+Conflicts:      qjdns < 2.0.0
+Conflicts:      qjdns-devel < 2.0.0
 
 %description
 JDNS is a simple DNS implementation that can perform normal DNS
@@ -48,6 +48,8 @@ functionality.
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
+Provides:       qjdns-devel = %{version}-%{release}
+Obsoletes:      qjdns-devel < 2.0.0
 
 %description    devel
 JDNS is a simple DNS implementation that can perform normal DNS
@@ -111,6 +113,9 @@ test "$(pkg-config --modversion qjdns)" = %{version}
 
 
 %changelog
+* Wed Apr  9 2014 Ivan Romanov <drizt@land.ru> - 2.0.0-4
+- obsoletes/conflicts/provides fixes
+
 * Wed Apr  9 2014 Ivan Romanov <drizt@land.ru> - 2.0.0-3
 - removed jdns binary from jdns package
 - dropped reduntant dependencies
