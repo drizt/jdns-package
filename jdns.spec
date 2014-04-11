@@ -139,7 +139,7 @@ test "$(pkg-config --modversion qjdns)" = %{version}
 %changelog
 * Fri Apr 11 2014 Ivan Romanov <drizt@land.ru> - 2.0.0-5
 - separated qjdns-devel subpackage
-- dropped and Confilcts/Obsoletes/Provides tags
+- dropped any Confilcts/Obsoletes/Provides tags
 
 * Wed Apr  9 2014 Ivan Romanov <drizt@land.ru> - 2.0.0-4
 - obsoletes/conflicts/provides fixes
